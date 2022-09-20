@@ -17,14 +17,14 @@ const commands = [
 const rest = new REST({ version: '9' }).setToken(smithconfig.token);
 
 smithbot.once('ready', () => {
-	console.log(`Logged : ${smithbot.user.tag}`);
+    console.log(`Logged : ${smithbot.user.tag}`);
     setInterval(() => {
         smithmta.query({
             type: 'mtasa',
             host: smithconfig.server_ip,
             port: smithconfig.server_port
         }).then((state) => {
-            smithbot.user.setActivity(`Player : ${state.raw.numplayers}/${state.maxplayers}`);
+            smithbot.user.setActivity(`🟢 اللاعبين المتصلين : ${state.raw.numplayers}/${state.maxplayers}`);
         }).catch(err => {
             console.log(err);
         });
@@ -45,12 +45,12 @@ smithbot.once('ready', () => {
 
 
 smithbot.on('interactionCreate', async smithmsg => {
-	if (!smithmsg.isCommand()) return;
+    if (!smithmsg.isCommand()) return;
 
-	const { commandName } = smithmsg;
+    const { commandName } = smithmsg;
 
-	if (commandName === 'server') {
-		smithmta.query({
+    if (commandName === 'server') {
+        smithmta.query({
             type: 'mtasa',
             host: smithconfig.server_ip,
             port: smithconfig.server_port
@@ -58,13 +58,13 @@ smithbot.on('interactionCreate', async smithmsg => {
             console.log(state)
             var smithembed = new DiscordSmith.MessageEmbed()
             .setTitle(state.name)
-            .setColor(`BLUE`)
-            .addField(`Map :`,` - ${state.map}`,true)
-            .addField(`Gametype :`,` - ${state.raw.gametype}`,true)
-            .addField(`Developer :`,` - ${state.raw.Developer}`,true)
-            .addField(`Player :`,` - ${state.raw.numplayers}/${state.maxplayers}`,true)
-            .addField(`Ping:`,` - ${state.ping}ms`,true)
-            .addField(`IP:`,` - ${state.connect}`,true)
+            .setColor(`red`)
+            .addField(`الخريطة :`,` - ${state.map}`,true)
+            .addField(`وصف اللعب :`,` - ${state.raw.gametype}`,true)
+            .addField(`تم إنشاءه بواسطة :`,` - G99 NetWork`,true)
+            .addField(`🟢 اللاعبين المتصلين :`,` - ${state.raw.numplayers}/${state.maxplayers}`,true)
+            .addField(`سرعة الاستجابة :`,` - ${state.ping}ms`,true)
+            .addField(`عنوان الايبي :`,` - ${state.connect}`,true)
             .setTimestamp()
             .setFooter(`Requested by ${smithmsg.member.user.tag}`,smithmsg.member.user.avatarURL());
 
